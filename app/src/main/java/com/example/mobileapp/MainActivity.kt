@@ -13,12 +13,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
@@ -28,11 +33,13 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -66,6 +73,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.semantics.Role.Companion.Checkbox
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import com.example.mobileapp.ui.theme.BackgroundColor
 
 import java.time.format.TextStyle
 
@@ -74,11 +82,15 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-                Scaffold { paddingValues: PaddingValues ->    //Elementos Iniciales Importantes
+                Scaffold(
+                    modifier = Modifier.fillMaxSize()
+                ) { paddingValues: PaddingValues ->    //Elementos Iniciales Importantes
                     Column(                                   //Elementos Iniciales Importantes
                         modifier = Modifier
+                            .fillMaxSize()
                             .padding(paddingValues)
-                            .fillMaxSize(),
+
+                        ,
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally   //Elementos Iniciales Importantes
                     ) { //Aqui se pone como tal la vista y funciones que conformaran la vista
@@ -88,6 +100,52 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+@Composable
+fun MyNavigationBar() {
+    Column {
+        // Divider separado arriba de la barra de navegación
+        Divider(
+            color = Color(0xFF6C63FF),  // Color de la línea
+            thickness = 5.dp,    // Grosor de la línea
+        )
+
+        // NavigationBar
+        NavigationBar(
+            containerColor = Color.White,
+            contentColor = Color.Black,
+
+        ) {
+            NavigationBarItem(
+                icon = { Icon(Icons.Filled.Home, contentDescription = "Home", modifier = Modifier.size(50.dp)) },
+                label = { Text("Home", fontSize = 12.sp) },
+                selected = false,
+                onClick = { /* Acción cuando se selecciona */ }
+            )
+            NavigationBarItem(
+                icon = { Icon(Icons.Filled.Place, contentDescription = "Rastreo", modifier = Modifier.size(50.dp)) },
+                label = { Text("Rastreo", fontSize = 12.sp) },
+                selected = false,
+                onClick = { /* Acción cuando se selecciona */ }
+            )
+            NavigationBarItem(
+                icon = { Icon(Icons.Filled.Warning, contentDescription = "Avisos", modifier = Modifier.size(50.dp)) },
+                label = { Text("Avisos", fontSize = 12.sp) },
+                selected = false,
+                onClick = { /* Acción cuando se selecciona */ }
+            )
+            NavigationBarItem(
+                icon = { Icon(Icons.Filled.Person, contentDescription = "Perfil", modifier = Modifier.size(50.dp)) },
+                label = { Text("Perfil", fontSize = 12.sp) },
+                selected = false,
+                onClick = { /* Acción cuando se selecciona */ }
+            )
+        }
+    }
+}
+
+
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -438,9 +496,7 @@ fun Profile2() {
     val logo: Painter = painterResource(id = R.drawable.profile) // Replace with actual resource
 
     Scaffold(
-        bottomBar = {
-            BottomNavigationBar()
-        },
+        bottomBar = { MyNavigationBar() },
         content = { padding ->
             Box(
                 modifier = Modifier
@@ -544,55 +600,7 @@ fun Profile2() {
     )
 }
 
-@Composable
-fun BottomNavigationBar() { //CORREGIR
-    NavigationBar(
-        modifier = Modifier
-            .fillMaxWidth(),
 
-        containerColor = Color(0xFFDCD9FF) // Same background color for consistency
-    ) {
-        // Icono de "Inicio"
-        NavigationBarItem(
-            icon = {
-                Icon(Icons.Filled.Home, contentDescription = "Inicio")
-            },
-            label = { Text("Inicio") },
-            selected = false,
-            onClick = { /* Acción para el inicio */ }
-        )
-
-        // Icono de "Rastreo"
-        NavigationBarItem(
-            icon = {
-                Icon(Icons.Filled.LocationOn, contentDescription = "Rastreo")
-            },
-            label = { Text("Rastreo") },
-            selected = false,
-            onClick = { /* Acción para rastreo */ }
-        )
-
-        // Icono de "Avisos"
-        NavigationBarItem(
-            icon = {
-                Icon(Icons.Filled.Warning, contentDescription = "Avisos")
-            },
-            label = { Text("Avisos") },
-            selected = false,
-            onClick = { /* Acción para avisos */ }
-        )
-
-        // Icono de "Cuenta"
-        NavigationBarItem(
-            icon = {
-                Icon(Icons.Filled.Person, contentDescription = "Cuenta")
-            },
-            label = { Text("Cuenta") },
-            selected = true,
-            onClick = { /* Acción para la cuenta */ }
-        )
-    }
-}
 
 
 

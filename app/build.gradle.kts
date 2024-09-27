@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.serialization)
     id("kotlin-parcelize")
     alias(libs.plugins.google.gms.google.services)
+
 }
 
 android {
@@ -63,26 +64,21 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-
+    
+    implementation(libs.landscapist.glide)
+    implementation(libs.firebase.storage)
+    implementation("io.coil-kt:coil-compose:2.7.0")
+    implementation(libs.coil)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
-    implementation(libs.landscapist.glide)
-
-
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
-    implementation(libs.firebase.storage)
     annotationProcessor(libs.room.compiler)
-
-
+    ksp(libs.room.compiler)
     implementation(libs.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.material)
 
-    implementation("io.coil-kt:coil-compose:2.7.0")
-
-    implementation(libs.coil)
-
-    ksp(libs.room.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -2,6 +2,7 @@ package com.example.mobileapp.features.vehicles.presentation.vehicleList
 
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -27,10 +28,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.bumptech.glide.Glide
 import com.example.mobileapp.features.vehicles.domain.Vehicle
+import com.skydoves.landscapist.ImageOptions
+import com.skydoves.landscapist.glide.GlideImage
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -80,30 +85,26 @@ fun VehicleListScreen(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp),
+                .padding(4.dp),
         ) {
-            Text(text = vehicle.brand, style = MaterialTheme.typography.bodyLarge)
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(16.dp)
             ) {
-                AndroidView(
-                    factory = { context ->
-                        ImageView(context).apply {
-                            layoutParams = ViewGroup.LayoutParams(
-                                ViewGroup.LayoutParams.MATCH_PARENT,
-                                (100 * context.resources.displayMetrics.density).toInt()
-                            )
-                        }
-                    },
-                    update = { imageView ->
-                        Glide.with(imageView.context)
-                            .load(vehicle.imageUri)
-                            .into(imageView)
-                    },
-                    modifier = Modifier.size(150.dp, 100.dp)
+                GlideImage(
+                    modifier = Modifier.size(120.dp),
+                    imageModel = { vehicle.imageUri },
+                    imageOptions = ImageOptions(
+                        contentScale = ContentScale.Crop,
+                        alignment = Alignment.Center
+                    )
                 )
-                Spacer(modifier = Modifier.size(130.dp))
+                Column(modifier = Modifier
+                    .padding(4.dp)
+                    .weight(1f)) {
+                    Text(text = vehicle.brand, fontSize = 20.sp)
+                    Text(text = vehicle.model)
+                    Text(text = vehicle.plate)
+                }
                 IconButton(onClick = {}) {
                     Icon(
                         Icons.Default.Edit,

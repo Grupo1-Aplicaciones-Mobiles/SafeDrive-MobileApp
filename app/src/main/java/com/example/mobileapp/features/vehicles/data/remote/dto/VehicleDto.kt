@@ -1,5 +1,6 @@
 package com.example.mobileapp.features.vehicles.data.remote.dto
 
+import android.net.Uri
 import com.example.mobileapp.features.vehicles.domain.Vehicle
 import com.google.gson.annotations.SerializedName
 
@@ -16,7 +17,7 @@ data class VehicleDto(
     @SerializedName("placa")
     val plate: String,
     @SerializedName("imagen")
-    val imageUrl: String
+    val imageUri: String
 )
 
 fun VehicleDto.toVehicle(): Vehicle {
@@ -26,6 +27,6 @@ fun VehicleDto.toVehicle(): Vehicle {
         model = model,
         color = color,
         plate = plate,
-        imageUrl = imageUrl
+        imageUri = imageUri
     )
 }

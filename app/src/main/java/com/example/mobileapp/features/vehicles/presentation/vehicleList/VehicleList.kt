@@ -98,7 +98,7 @@ fun VehicleListScreen(
                     },
                     update = { imageView ->
                         Glide.with(imageView.context)
-                            .load(vehicle.imageUrl)
+                            .load(vehicle.imageUri)
                             .into(imageView)
                     },
                     modifier = Modifier.size(150.dp, 100.dp)

@@ -1,5 +1,6 @@
 package com.example.mobileapp.features.vehicles.presentation.vehicleDetail
 
+import android.net.Uri
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -10,7 +11,11 @@ import com.example.mobileapp.features.vehicles.common.UIState
 import com.example.mobileapp.features.vehicles.data.remote.dto.VehicleDto
 import com.example.mobileapp.features.vehicles.data.repository.VehicleRepository
 import com.example.mobileapp.features.vehicles.domain.Vehicle
+import com.google.firebase.Firebase
+import com.google.firebase.storage.storage
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import java.util.UUID
 
 class VehicleDetailViewModel(private val repository: VehicleRepository): ViewModel() {
     private val _state = mutableStateOf(UIState<Vehicle>())
@@ -31,8 +36,8 @@ class VehicleDetailViewModel(private val repository: VehicleRepository): ViewMod
     private val _plate = mutableStateOf("")
     val plateState: State<String> get() = _plate
 
-    private val _imageUrl = mutableStateOf("")
-    val imageUrlState: State<String> get() = _imageUrl
+    private val _imageUri = mutableStateOf<Uri?>(null)
+    val imageUriState: State<Uri?> get() = _imageUri
 
     fun onBrandChanged(brand: String) {
         _brand.value = brand
@@ -50,19 +55,30 @@ class VehicleDetailViewModel(private val repository: VehicleRepository): ViewMod
         _plate.value = plate
     }
 
-    fun onImageUrlChanged(imageUrl: String) {
-        _imageUrl.value = imageUrl
+    fun onImageUriChanged(imageUri: Uri?) {
+        _imageUri.value = imageUri
     }
 
-    fun addVehicle() {
+    fun addVehicle(imageUri: Uri) {
         viewModelScope.launch {
             _state.value = UIState(isLoading = true)
+
+            val storageRef = Firebase.storage.reference.child("images/${UUID.randomUUID()}")
+
+            val downloadUrl = storageRef.putFile(imageUri)
+                .await()
+                .metadata
+                ?.reference
+                ?.downloadUrl
+                ?.await()
+                .toString()
+
             val vehicle = VehicleDto(
                 brand = _brand.value,
                 model = _model.value,
                 color = _color.value,
                 plate = _plate.value,
-                imageUrl = _imageUrl.value
+                imageUri = downloadUrl
             )
 
             val result = repository.postVehicles(vehicle)

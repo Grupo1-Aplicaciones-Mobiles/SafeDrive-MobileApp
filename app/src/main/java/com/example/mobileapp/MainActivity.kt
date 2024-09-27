@@ -29,8 +29,8 @@ class MainActivity : ComponentActivity() {
         val viewModel = VehicleListViewModel(repository)
         val viewmodel2 = VehicleDetailViewModel(repository)
         setContent {
-            AddVehicleScreen(viewmodel2)
-            //VehicleListScreen(viewModel)
+            //AddVehicleScreen(viewmodel2)
+            VehicleListScreen(viewModel)
         }
     }
 }

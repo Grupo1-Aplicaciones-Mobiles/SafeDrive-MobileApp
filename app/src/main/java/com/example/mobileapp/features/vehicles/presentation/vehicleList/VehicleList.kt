@@ -46,13 +46,13 @@ fun VehicleListScreen(openAddVehicle: () -> Unit = {}, viewModel: VehicleListVie
     val modelState = viewModel.brand.value
 
     val vehicles = listOf(
-        Vehicle("1", "McLaren Angga", "Supercar", "Naranja", "ABC-123", "https://i.pinimg.com/originals/02/aa/09/02aa0984b7f864e78ac126908a083703.jpg"),
-        Vehicle("2", "Mazda", "CX-9", "Rojo", "BCE-321", "https://derco-pe-prod.s3.amazonaws.com/images/versions/2022-01-13-CX_9_4.png"),
-        Vehicle("3", "Mitsubishi", "Xpander", "Blanco", "DEF-345", "https://autoland.com.pe/wp-content/uploads/2020/11/4-All-New-Xpander.png"),
-        Vehicle("4", "Toyota", "Rush", "Rojo", "BBG-556", "https://www.mitsuiautomotriz.com/sites/default/files/2023-02/CONOCELOS_TOYOTA_Rush-02.jpg"),
-        Vehicle("5", "Toyota", "Yaris", "Blanco", "FFR-443", "https://www.toyotaperu.com.pe/toyota-a-gas/assets/img/modelo/yaris-auto-glp.jpg"),
-        Vehicle("6", "Ferrari", "458 Italia", "Rojo", "HHR-677", "https://cdn.ferrari.com/cms/network/media/img/resize/5db98e9b8c92940b3a3de720-ferrari-458-italia-design-focus-1?"),
-        Vehicle("7", "Lamborghini", "Aventador", "Verde", "LLG-698", "https://cdn.motor1.com/images/mgl/Q8bqN/s1/lamborghini-aventador-svj.webp")
+        Vehicle("1", "McLaren Angga", "Supercar", "ABC-123", "Naranja", "https://i.pinimg.com/originals/02/aa/09/02aa0984b7f864e78ac126908a083703.jpg"),
+        Vehicle("2", "Mazda", "CX-9", "BCE-321", "Rojo", "https://derco-pe-prod.s3.amazonaws.com/images/versions/2022-01-13-CX_9_4.png"),
+        Vehicle("3", "Mitsubishi", "Xpander", "DEF-345", "Blanco", "https://autoland.com.pe/wp-content/uploads/2020/11/4-All-New-Xpander.png"),
+        Vehicle("4", "Toyota", "Rush", "BBG-556", "Rojo", "https://www.mitsuiautomotriz.com/sites/default/files/2023-02/CONOCELOS_TOYOTA_Rush-02.jpg"),
+        Vehicle("5", "Toyota", "Yaris", "FFR-443", "Blanco", "https://www.toyotaperu.com.pe/toyota-a-gas/assets/img/modelo/yaris-auto-glp.jpg"),
+        Vehicle("6", "Ferrari", "458 Italia", "HHR-677", "Rojo", "https://cdn.ferrari.com/cms/network/media/img/resize/5db98e9b8c92940b3a3de720-ferrari-458-italia-design-focus-1?"),
+        Vehicle("7", "Lamborghini", "Aventador", "LLG-698", "Verde", "https://cdn.motor1.com/images/mgl/Q8bqN/s1/lamborghini-aventador-svj.webp")
     )
 
 
@@ -113,7 +113,7 @@ fun VehicleListScreen(openAddVehicle: () -> Unit = {}, viewModel: VehicleListVie
                     .weight(1f)) {
                     Text(text = vehicle.brand, fontSize = 20.sp)
                     Text(text = vehicle.model)
-                    Text(text = vehicle.plate)
+                    Text(text = vehicle.color)
                 }
                 IconButton(onClick = {}) {
                     Icon(

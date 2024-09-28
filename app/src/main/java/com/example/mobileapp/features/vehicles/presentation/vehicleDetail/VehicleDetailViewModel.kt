@@ -83,12 +83,12 @@ class VehicleDetailViewModel(private val repository: VehicleRepository): ViewMod
 
             val result = repository.postVehicles(vehicle)
             when (result) {
-                is Resource.Success -> {  // Maneja el caso de éxito
-                    val addedVehicle = result.data // Aquí debería ser de tipo Vehicle
-                    _state.value = UIState(data = addedVehicle)  // Almacena el Vehicle completo
+                is Resource.Success -> {
+                    val addedVehicle = result.data
+                    _state.value = UIState(data = addedVehicle)
                     Log.d("VehicleDetailViewModel", "Vehicle added successfully: $addedVehicle")
                 }
-                is Resource.Error -> {  // Maneja el caso de error
+                is Resource.Error -> {
                     _state.value = UIState(message = result.message ?: "Error al agregar vehículo")
                     Log.e("VehicleDetailViewModel", "Failed to add vehicle: ${result.message}")
                 }

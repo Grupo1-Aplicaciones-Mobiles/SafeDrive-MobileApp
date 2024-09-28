@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -41,12 +42,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import com.example.mobileapp.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddVehicleScreen(viewModel: VehicleDetailViewModel) {
+fun AddVehicleScreen(goBack: () -> Unit = {}, viewModel: VehicleDetailViewModel = viewModel()) {
     val state = viewModel.state.value
     val context = LocalContext.current
 
@@ -60,7 +62,7 @@ fun AddVehicleScreen(viewModel: VehicleDetailViewModel) {
             TopAppBar(
                 title = { Text(text = "Agregar vehículo: ", textAlign = TextAlign.Center) },
                 actions = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = {goBack()}) {
                         Icon(
                             Icons.Filled.ArrowBack,
                             contentDescription = "Go Back",
@@ -81,25 +83,25 @@ fun AddVehicleScreen(viewModel: VehicleDetailViewModel) {
         ) {
             OutlinedTextField(value = viewModel.brandState.value, onValueChange = { brand ->
                 viewModel.onBrandChanged(brand)
-            }, label = { Text(text = "Marca") }, shape = RoundedCornerShape(10.dp), colors = TextFieldDefaults.colors(
+            }, label = { Text(text = "Marca", color = Color.Black) }, shape = RoundedCornerShape(10.dp), colors = TextFieldDefaults.colors(
                 unfocusedContainerColor = Color(0xFFBB86FC)
             ))
             Spacer(modifier = Modifier.height(16.dp))
             OutlinedTextField(value = viewModel.modelState.value, onValueChange = { model ->
                 viewModel.onModelChanged(model)
-            }, label = { Text(text = "Modelo") }, shape = RoundedCornerShape(10.dp), colors = TextFieldDefaults.colors(
+            }, label = { Text(text = "Modelo", color = Color.Black) }, shape = RoundedCornerShape(10.dp), colors = TextFieldDefaults.colors(
                 unfocusedContainerColor = Color(0xFFBB86FC)
             ))
             Spacer(modifier = Modifier.height(16.dp))
             OutlinedTextField(value = viewModel.colorState.value, onValueChange = { color ->
                 viewModel.onColorChanged(color)
-            }, label = { Text(text = "Color") }, shape = RoundedCornerShape(10.dp), colors = TextFieldDefaults.colors(
+            }, label = { Text(text = "Color", color = Color.Black) }, shape = RoundedCornerShape(10.dp), colors = TextFieldDefaults.colors(
                 unfocusedContainerColor = Color(0xFFBB86FC)
             ))
             Spacer(modifier = Modifier.height(16.dp))
             OutlinedTextField(value = viewModel.plateState.value, onValueChange = { plate ->
                 viewModel.onPlateChanged(plate)
-            }, label = { Text(text = "Placa") }, shape = RoundedCornerShape(10.dp), colors = TextFieldDefaults.colors(
+            }, label = { Text(text = "Placa", color = Color.Black) }, shape = RoundedCornerShape(10.dp), colors = TextFieldDefaults.colors(
                 unfocusedContainerColor = Color(0xFFBB86FC)
             ))
 
@@ -115,7 +117,7 @@ fun AddVehicleScreen(viewModel: VehicleDetailViewModel) {
                 painter = painter,
                 contentDescription = "Image",
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.height(250.dp).width(350.dp).border(width = 2.dp, color = Color.Black, shape = RoundedCornerShape(8.dp)).clickable {
+                modifier = Modifier.height(200.dp).width(350.dp).border(width = 2.dp, color = Color.Black, shape = RoundedCornerShape(8.dp)).clickable {
                     launcher.launch("image/*")
                 }
             )

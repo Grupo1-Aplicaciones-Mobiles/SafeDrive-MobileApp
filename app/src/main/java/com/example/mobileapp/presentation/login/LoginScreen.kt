@@ -44,7 +44,7 @@ import com.example.mobileapp.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(){
+fun LoginScreen(onLoginClicked: () -> Unit){
     val logo: Painter = painterResource(id = R.drawable.logo) // Replace with actual resource
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -88,10 +88,10 @@ fun LoginScreen(){
             onValueChange = {newValue -> username = newValue },
             label = { Text("Username",color = Color.Black) },
             modifier = Modifier.fillMaxWidth(),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
+            colors = TextFieldDefaults.colors(
                 focusedTextColor = Color.Black,
-                containerColor = Color(0XFFDCD9FF),
-
+                unfocusedContainerColor = Color(0XFFDCD9FF),
+                focusedContainerColor = Color(0XFFDCD9FF)
             )
         )
 
@@ -117,8 +117,8 @@ fun LoginScreen(){
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             visualTransformation = PasswordVisualTransformation(),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                containerColor = Color(0XFFDCD9FF),
+            colors = TextFieldDefaults.colors(
+                unfocusedContainerColor = Color(0XFFDCD9FF),
                 focusedTextColor = Color.Black
             )
 
@@ -139,7 +139,7 @@ fun LoginScreen(){
 
         // Login button
         Button(
-            onClick = { },
+            onClick = { onLoginClicked() },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(48.dp),

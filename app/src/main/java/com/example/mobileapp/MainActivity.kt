@@ -61,13 +61,36 @@ object Edit_Profile {
     const val route = "edit_profile"
 }
 
+@Serializable
+object Vehicle_List {
+    const val route = "vehicle_list"
+}
+
+@Serializable
+object Add_Vehicle {
+    const val route = "add_vehicle"
+}
+
 
 class MainActivity : ComponentActivity() {
+
+    val retrofit = Retrofit.Builder()
+        .baseUrl(Constants.BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(VehicleService::class.java)
+    val repository = VehicleRepository(retrofit)
+    val viewModel = VehicleListViewModel(repository)
+    val viewmodel2 = VehicleDetailViewModel(repository)
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
+
+
         val topLevelRoutes = listOf(
-            TopLevelRoute("Inicio", Login.route, Icons.Filled.Home),
-            TopLevelRoute("Rastreo", Register.route, Icons.Filled.LocationOn),
-            TopLevelRoute("Avisos", Edit_Profile.route, Icons.Filled.Warning),
+            TopLevelRoute("Inicio", Register.route, Icons.Filled.Home),
+            TopLevelRoute("Rastreo", Vehicle_List.route, Icons.Filled.LocationOn),
+            TopLevelRoute("Avisos", Add_Vehicle.route, Icons.Filled.Warning),
             TopLevelRoute("Cuenta", Edit_Profile.route, Icons.Filled.Person),
 
         )
@@ -117,12 +140,14 @@ class MainActivity : ComponentActivity() {
                 ) { paddingValues ->
                     NavHost(
                         navController = navController,
-                        startDestination = Edit_Profile.route,
+                        startDestination = Register.route,
                         modifier = Modifier.padding(paddingValues)
                     ) {
-                        composable(Edit_Profile.route) { EditProfileScreen() }  // Definir la ruta correctamente
-                        composable(Login.route) { LoginScreen() }
-                        composable(Register.route) { RegisterScreen() }
+                        composable(Edit_Profile.route) { EditProfileScreen() }
+                        composable(Login.route) { LoginScreen(onLoginClicked = {navController.navigate(Vehicle_List.route)}) }
+                        composable(Register.route) { RegisterScreen(onNextClicked = {navController.navigate(Login.route)}) }
+                        composable(Add_Vehicle.route) { AddVehicleScreen(goBack = {navController.popBackStack()}, viewmodel2)  }
+                        composable(Vehicle_List.route) { VehicleListScreen( openAddVehicle = {navController.navigate(Add_Vehicle.route)}, viewModel) }
 
                     }
                 }

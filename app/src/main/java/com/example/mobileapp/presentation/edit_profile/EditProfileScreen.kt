@@ -101,8 +101,8 @@ fun EditProfileScreen() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(50.dp),
-                        colors = TextFieldDefaults.outlinedTextFieldColors(
-                            containerColor = Color.White
+                        colors = TextFieldDefaults.colors(
+                            unfocusedContainerColor = Color.White
                         )
                     )
 
@@ -116,8 +116,8 @@ fun EditProfileScreen() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(50.dp),
-                        colors = TextFieldDefaults.outlinedTextFieldColors(
-                            containerColor = Color.White
+                        colors = TextFieldDefaults.colors(
+                            unfocusedContainerColor = Color.White
                         )
                     )
 
@@ -131,8 +131,8 @@ fun EditProfileScreen() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(50.dp),
-                        colors = TextFieldDefaults.outlinedTextFieldColors(
-                            containerColor = Color.White
+                        colors = TextFieldDefaults.colors(
+                            unfocusedContainerColor = Color.White
                         )
                     )
 

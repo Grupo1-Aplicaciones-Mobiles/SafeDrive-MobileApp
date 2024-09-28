@@ -16,7 +16,7 @@ data class VehicleDto(
     val color: String,
     @SerializedName("placa")
     val plate: String,
-    @SerializedName("imagen")
+    @SerializedName("imageUri")
     val imageUri: String
 )
 

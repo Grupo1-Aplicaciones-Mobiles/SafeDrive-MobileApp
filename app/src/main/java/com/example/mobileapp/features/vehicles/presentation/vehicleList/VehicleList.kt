@@ -32,6 +32,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bumptech.glide.Glide
 import com.example.mobileapp.features.vehicles.domain.Vehicle
 import com.skydoves.landscapist.ImageOptions
@@ -39,11 +40,20 @@ import com.skydoves.landscapist.glide.GlideImage
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun VehicleListScreen(
-    viewModel: VehicleListViewModel
-) {
+fun VehicleListScreen(openAddVehicle: () -> Unit = {}, viewModel: VehicleListViewModel = viewModel()) {
+
     val state = viewModel.state.value
     val modelState = viewModel.brand.value
+
+    val vehicles = listOf(
+        Vehicle("1", "McLaren Angga", "Supercar", "Naranja", "ABC-123", "https://i.pinimg.com/originals/02/aa/09/02aa0984b7f864e78ac126908a083703.jpg"),
+        Vehicle("2", "Mazda", "CX-9", "Rojo", "BCE-321", "https://derco-pe-prod.s3.amazonaws.com/images/versions/2022-01-13-CX_9_4.png"),
+        Vehicle("3", "Mitsubishi", "Xpander", "Blanco", "DEF-345", "https://autoland.com.pe/wp-content/uploads/2020/11/4-All-New-Xpander.png"),
+        Vehicle("4", "Toyota", "Rush", "Rojo", "BBG-556", "https://www.mitsuiautomotriz.com/sites/default/files/2023-02/CONOCELOS_TOYOTA_Rush-02.jpg"),
+        Vehicle("5", "Toyota", "Yaris", "Blanco", "FFR-443", "https://www.toyotaperu.com.pe/toyota-a-gas/assets/img/modelo/yaris-auto-glp.jpg"),
+        Vehicle("6", "Ferrari", "458 Italia", "Rojo", "HHR-677", "https://cdn.ferrari.com/cms/network/media/img/resize/5db98e9b8c92940b3a3de720-ferrari-458-italia-design-focus-1?"),
+        Vehicle("7", "Lamborghini", "Aventador", "Verde", "LLG-698", "https://cdn.motor1.com/images/mgl/Q8bqN/s1/lamborghini-aventador-svj.webp")
+    )
 
 
     Scaffold(
@@ -51,7 +61,7 @@ fun VehicleListScreen(
             TopAppBar(
                 title = { Text(text = "Vehículos") },
                 actions = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = { openAddVehicle() }) {
                         Icon(
                             Icons.Filled.AddCircle,
                             contentDescription = "Add Vehicle",
@@ -68,9 +78,9 @@ fun VehicleListScreen(
         if (state.message.isNotEmpty()) {
             Text(text = "Error: ${state.message}", color = Color.Red)
         }
-        state.data?.let { vehicles ->
+        vehicles.let { vehicle ->
             LazyColumn(modifier = Modifier.padding(paddingValues)) {
-                items(vehicles) { vehicle ->
+                items(vehicle) { vehicle ->
                     VehicleItem(vehicle, onDeleteClick = {
                         viewModel.deleteVehicle(vehicle.id)
                     })

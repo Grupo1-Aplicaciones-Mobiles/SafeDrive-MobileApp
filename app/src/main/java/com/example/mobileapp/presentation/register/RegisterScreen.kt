@@ -35,6 +35,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -45,7 +46,7 @@ import com.example.mobileapp.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterScreen(){
+fun RegisterScreen(onNextClicked: () -> Unit){
     val scrollState = rememberScrollState() // Estado del scroll
     val logo: Painter = painterResource(id = R.drawable.logo) // Replace with actual resource
     // Estados de entrada
@@ -107,13 +108,15 @@ fun RegisterScreen(){
             label = { Text("Name",color = Color.Black) },
             modifier = Modifier.fillMaxWidth(),
             isError = nameError,
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                containerColor = Color(0XFFDCD9FF),
-                focusedBorderColor = if (nameError) Color.Red else Color(0xFF6C63FF),
-                unfocusedBorderColor = if (nameError) Color.Red else Color.Gray,
+            colors = TextFieldDefaults.colors(
+                unfocusedContainerColor = Color(0XFFDCD9FF),
+                focusedContainerColor = Color(0XFFDCD9FF),
+                focusedIndicatorColor = if (nameError) Color.Red else Color(0XFFDCD9FF),
+                unfocusedIndicatorColor = if (nameError) Color.Red else Color.Gray,
                 focusedTextColor = Color.Black,
                 unfocusedTextColor = Color.Black,
-                errorTextColor = Color.Black
+                errorIndicatorColor = Color.Red,
+                errorTextColor = Color.Red
             )
         )
         if (nameError) {
@@ -127,10 +130,11 @@ fun RegisterScreen(){
             label = { Text("Email Adress",color = Color.Black) },
             modifier = Modifier.fillMaxWidth(),
             isError = emailError,
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                containerColor = Color(0XFFDCD9FF),
-                focusedBorderColor = if (emailError) Color.Red else Color(0xFF6C63FF),
-                unfocusedBorderColor = if (emailError) Color.Red else Color.Gray,
+            colors = TextFieldDefaults.colors(
+                unfocusedContainerColor = Color(0XFFDCD9FF),
+                focusedContainerColor = Color(0XFFDCD9FF),
+                focusedIndicatorColor = if (emailError) Color.Red else Color(0xFF6C63FF),
+                unfocusedIndicatorColor = if (emailError) Color.Red else Color.Gray,
                 focusedTextColor = Color.Black,
                 unfocusedTextColor = Color.Black,
                 errorTextColor = Color.Black
@@ -148,10 +152,11 @@ fun RegisterScreen(){
             label = { Text("Mobile Number",color = Color.Black) },
             modifier = Modifier.fillMaxWidth(),
             isError = numberError,
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                containerColor = Color(0XFFDCD9FF),
-                focusedBorderColor = if (numberError) Color.Red else Color(0xFF6C63FF),
-                unfocusedBorderColor = if (numberError) Color.Red else Color.Gray,
+            colors = TextFieldDefaults.colors(
+                unfocusedContainerColor = Color(0XFFDCD9FF),
+                focusedContainerColor = Color(0XFFDCD9FF),
+                focusedIndicatorColor = if (numberError) Color.Red else Color(0xFF6C63FF),
+                unfocusedIndicatorColor = if (numberError) Color.Red else Color.Gray,
                 focusedTextColor = Color.Black,
                 unfocusedTextColor = Color.Black,
                 errorTextColor = Color.Black
@@ -168,10 +173,11 @@ fun RegisterScreen(){
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             visualTransformation = PasswordVisualTransformation(),
             isError = passwordError,
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                containerColor = Color(0XFFDCD9FF),
-                focusedBorderColor = if (passwordError) Color.Red else Color(0xFF6C63FF),
-                unfocusedBorderColor = if (passwordError) Color.Red else Color.Gray,
+            colors = TextFieldDefaults.colors(
+                unfocusedContainerColor = Color(0XFFDCD9FF),
+                focusedContainerColor = Color(0XFFDCD9FF),
+                focusedIndicatorColor = if (passwordError) Color.Red else Color(0xFF6C63FF),
+                unfocusedIndicatorColor = if (passwordError) Color.Red else Color.Gray,
                 focusedTextColor = Color.Black,
                 unfocusedTextColor = Color.Black,
                 errorTextColor = Color.Black
@@ -192,10 +198,11 @@ fun RegisterScreen(){
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             visualTransformation = PasswordVisualTransformation(),
             isError = passwordError,
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                containerColor = Color(0XFFDCD9FF),
-                focusedBorderColor = if (passwordError) Color.Red else Color(0xFF6C63FF),
-                unfocusedBorderColor = if (passwordError) Color.Red else Color.Gray,
+            colors = TextFieldDefaults.colors(
+                unfocusedContainerColor = Color(0XFFDCD9FF),
+                focusedContainerColor = Color(0XFFDCD9FF),
+                focusedIndicatorColor = if (passwordError) Color.Red else Color(0xFF6C63FF),
+                unfocusedIndicatorColor = if (passwordError) Color.Red else Color.Gray,
                 focusedTextColor = Color.Black,
                 unfocusedTextColor = Color.Black,
                 errorTextColor = Color.Black
@@ -223,7 +230,7 @@ fun RegisterScreen(){
             ClickableText(
                 text = AnnotatedString("Estoy de acuerdo con los términos y condiciones"),
                 onClick = { /* Acción al hacer clic en el texto */ },
-                style = androidx.compose.ui.text.TextStyle(fontSize = 16.sp)
+                style = TextStyle(fontSize = 16.sp)
             )
         }
 
@@ -239,6 +246,7 @@ fun RegisterScreen(){
                 } else {
                     passwordError = false
                     passwordErrorMessage = ""
+                    onNextClicked()
                 }
             },
             modifier = Modifier
